@@ -21,12 +21,11 @@ DB_PWD = os.getenv('DB_PWD')
 DB_USER = os.getenv('DB_USER')
 DB_HOST = os.getenv('DB_HOST')
 
-UPLOAD_FOLDER = 'uploads/images/'
+
 ALLOWED_EXTENSIONS={'jpeg', 'png', 'jpg'}
 jwtsecret = os.getenv('jwtSecret')
 DB = os.getenv('DB')
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 Database.initialize(user=f'{DB_USER}',
                     password=f'{DB_PWD}',
@@ -93,14 +92,6 @@ def signup():
     elif len(password) < 6:
         return {'message':"Password length should be 6 or more characters"}
     else:
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file_list = filename.split('.')
-            file_name = uuid.uuid5(uuid.NAMESPACE_DNS,file_list[0]).hex
-            file_list[0] = file_name
-            new_filename = '.'.join(file_list)
-            path=os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
-            file.save(path)
 
         try:
             with CursorFromConnectionFromPool() as cursor:
