@@ -62,7 +62,6 @@ def get_users():
             'name': user_tuple_list[1], 'places': user_places_count,
             'image_type': user_tuple_list[4]
         }
-        # user_new = tuple(user_tuple_list)
         user_list.append(user_new)
     return {'users': user_list}
 
