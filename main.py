@@ -196,7 +196,6 @@ def get_places_by_user_id(uid):
 @app.route('/api/places', methods=['POST'])
 @cross_origin()
 def create_place():
-    # data = request.headers['Authorization']
     title = request.form['title']
     token = request.headers['Authorization'].split(' ')[1]
     if token == '':
