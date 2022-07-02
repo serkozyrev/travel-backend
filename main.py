@@ -162,10 +162,10 @@ def get_place_by_id(pid):
     if not place_by_id:
         return {'message':'Could not find a place for the provided id'}
 
-    coordinates = {'lat': place_by_id[6], 'lng': place_by_id[7]}
+    coordinates = {'lat': place_by_id[5], 'lng': place_by_id[6]}
     place_item = {
         'id': place_by_id[0], 'title': place_by_id[1], 'description': place_by_id[2],
-        'image': place_by_id[3], 'address': place_by_id[4], 'creator': place_by_id[5],
+        'image': place_by_id[3], 'address': place_by_id[4], 'creator': place_by_id[8],
         'location': coordinates
     }
     return {'place': place_item}
@@ -183,10 +183,10 @@ def get_places_by_user_id(uid):
     places_list = []
 
     for place_by_user_id in places_by_user_id:
-        coordinates = {'lat': place_by_user_id[6], 'lng': place_by_user_id[7]}
+        coordinates = {'lat': place_by_user_id[5], 'lng': place_by_user_id[6]}
         place_item = {
             'id': place_by_user_id[0], 'title': place_by_user_id[1], 'description': place_by_user_id[2],
-            'image': place_by_user_id[3], 'address': place_by_user_id[4], 'creator': place_by_user_id[5],
+            'image': place_by_user_id[3], 'address': place_by_user_id[4], 'creator': place_by_user_id[8],
             'location': coordinates
         }
         places_list.append(place_item)
@@ -251,8 +251,7 @@ def update_place(pid):
     if token == '':
         return {'message':'Authorization failed'}
     user_id = auth(token)
-
-    if place_by_id[5] != user_id:
+    if place_by_id[8] != user_id:
         return {'message':'You are not allowed to update this place'}
 
     with CursorFromConnectionFromPool() as cursor:
@@ -276,7 +275,7 @@ def delete_place(pid):
         return {'message':'Authorization failed'}
     user_id = auth(token)
 
-    if place_by_id[5] != user_id:
+    if place_by_id[8] != user_id:
         return {'message':'You are not allowed to delete this place'}
 
     with CursorFromConnectionFromPool() as cursor:
